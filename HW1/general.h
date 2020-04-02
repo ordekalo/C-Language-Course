@@ -22,4 +22,22 @@ void printMaxSubMatrix(const int *mat, int rows, int cols, int subRows, int subC
 
 void scanSubRowCol(int *subRows, int *subCols);
 
+void initBoolMatrix(int *mat, int rows, int cols);
+
+void getRectPos(int *y, int *x, const int *mat, int rows, int cols, int startY, int startX);
+
+void getRectDim(int *width, int *length, const int *mat, int rows, int cols, int startY, int startX);
+
+void printRects(const int *mat, int rows, int cols);
+
+int checkUpFilled(const int *mat, int cols, int y, int x);
+
+int checkDownFilled(const int *mat, int rows, int cols, int y, int x);
+
+int checkLeftFilled(const int *mat, int cols, int y, int x);
+
+int checkRightFilled(const int *mat, int cols, int y, int x);
+
+int checkFilled(const int *mat, int cols, int y, int x);
+
 #endif //HW1_GENERAL_H

@@ -7,7 +7,7 @@
 
 void printMatrix(const int *mat, int rows, int cols) {
     for (int i = 0; i < rows; ++i) {
-    	printf("|");
+        printf("|");
         for (int j = 0; j < cols; ++j) {
             printf("%d|", *(mat + i * cols + j));
         }
@@ -26,7 +26,7 @@ void printEffectiveMatrix(const int *mat, int startRow, int startCol, int subRow
         endCol = BIG_DIM;
     }
     for (int r = startRow; r < endRow; r++) {
-    	printf("|");
+        printf("|");
         for (int c = startCol; c < endCol; c++) {
             printf("%4d|", *((mat + r * BIG_DIM) + c));
         }
@@ -38,7 +38,7 @@ void printEffectiveMatrix(const int *mat, int startRow, int startCol, int subRow
 void initMatrix(int *mat, int rows, int cols) {
     printf("initializing values into matrix %dx%d\n", rows, cols);
     for (int r = 0; r < rows; r++) {
-    	printf("|");
+        printf("|");
         for (int c = 0; c < cols; c++) {
             int num = (rand() % (UPPER - LOWER + 1)) + LOWER;
             *(mat + r * cols + c) = num;
@@ -66,7 +66,7 @@ void printMaxSubMatrix(const int *mat, int rows, int cols, int subRows, int subC
     int endRow = rows - subRows;
     int endCol = cols - subCols;
     int tmpSum;
-    //In case user chooses the matrix dimensions
+    //In case user chooses the main matrix dimensions
     maxSum = sumEffectiveMatrix(mat, maxStartRow, maxStartCol, subRows, subRows);
     for (int r = 0; r < endRow; r++) {
         for (int c = 0; c < endCol; c++) {
@@ -100,4 +100,201 @@ void scanSubRowCol(int *subRows, int *subCols) {
     printf("you chose subRows=%d and subCols=%d\n", *subRows, *subCols);
 }
 
+void initBoolMatrix(int *mat, int rows, int cols) {
+    printf("initializing boolean values into matrix %dx%d\n", rows, cols);
+    for (int r = 0; r < rows; r++) {
+        printf("|");
+        for (int c = 0; c < cols; c++) {
+            int num = (rand() % 2);
+            *(mat + r * cols + c) = num;
+            printf("%d|", *(mat + r * cols + c));
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
 
+// ROWS = Y axis , COLS = X axis
+void getRectPos(int *y, int *x, const int *mat, int rows, int cols, int startY, int startX) {
+    //Validate current position not 0
+    if (!checkFilled(mat, cols, startY, startX)) {
+        // -1 symbolize None
+        *y = -1;
+        *x = -1;
+        return;
+    }
+    int rightSteps = 0;
+    for (int c = startX; c < cols; c++) {
+        if (!checkFilled(mat, cols, startY, c)) {
+            break;
+        }
+        if (checkUpFilled(mat, cols, startY, c)) {
+            *y = -1;
+            *x = -1;
+            return;
+        }
+        rightSteps++;
+    }
+    int downSteps = 0;
+    for (int r = startY; r < rows; r++) {
+        if (!checkFilled(mat, cols, r, startX)) {
+            break;
+        }
+        if (checkLeftFilled(mat, cols, r, startX)) {
+            *y = -1;
+            *x = -1;
+            return;
+        }
+        downSteps++;
+    }
+
+    for (int rS = startX; rS < rightSteps; rS++) {
+        if (checkDownFilled(mat, rows, cols, startY + downSteps - 1, rS)) {
+            *y = -1;
+            *x = -1;
+            return;
+        }
+    }
+
+    for (int dS = startY; dS < downSteps; dS++) {
+        if (checkRightFilled(mat, cols, dS, startX + rightSteps - 1)) {
+            *y = -1;
+            *x = -1;
+            return;
+        }
+    }
+
+    for (int r = startY; r < downSteps; r++) {
+        for (int c = startX; c < rightSteps; c++) {
+            if (!checkFilled(mat, cols, r, c)) {
+                *y = -1;
+                *x = -1;
+                return;
+            }
+        }
+    }
+
+    *y = startY;
+    *x = startX;
+}
+
+
+void getRectDim(int *width, int *length, const int *mat, int rows, int cols, int startY, int startX) {
+    //Validate current position not 0
+    if (!checkFilled(mat, cols, startY, startX)) {
+        // -1 symbolize None
+        *length = -1;
+        *width = -1;
+        return;
+    }
+    int rightSteps = 0;
+    for (int c = startX; c < cols; c++) {
+        if (!checkFilled(mat, cols, startY, c)) {
+            break;
+        }
+        if (checkUpFilled(mat, cols, startY, c)) {
+            *length = -1;
+            *width = -1;
+            return;
+        }
+        rightSteps++;
+    }
+    int downSteps = 0;
+    for (int r = startY; r < rows; r++) {
+        if (!checkFilled(mat, cols, r, startX)) {
+            break;
+        }
+        if (checkLeftFilled(mat, cols, r, startX)) {
+            *length = -1;
+            *width = -1;
+            return;
+        }
+        downSteps++;
+    }
+
+    for (int rS = startX; rS < rightSteps; rS++) {
+        if (checkDownFilled(mat, rows, cols, startY + downSteps - 1, rS)) {
+            *length = -1;
+            *width = -1;
+            return;
+        }
+    }
+
+    for (int dS = startY; dS < downSteps; dS++) {
+        if (checkRightFilled(mat, cols, dS, startX + rightSteps - 1)) {
+            *length = -1;
+            *width = -1;
+            return;
+        }
+    }
+
+    for (int r = startY; r < downSteps; r++) {
+        for (int c = startX; c < rightSteps; c++) {
+            if (!checkFilled(mat, cols, r, c)) {
+                *length = -1;
+                *width = -1;
+                return;
+            }
+        }
+    }
+
+    *length = downSteps;
+    *width = rightSteps;
+}
+
+//format (x, y, width, length)
+void printRects(const int *mat, int rows, int cols) {
+    int x, y, width, length;
+    for (int currentY = 0; currentY < rows; currentY++) {
+        for (int currentX = 0; currentX < cols; currentX++) {
+            getRectPos(&y, &x, mat, rows, cols, currentY, currentX);
+            getRectDim(&width, &length, mat, rows, cols, currentY, currentX);
+            if (x != -1) {
+                printf("(%4d, %4d, %4d, %4d)\n", x + 1, y + 1, width, length);
+            }
+        }
+    }
+}
+
+int checkUpFilled(const int *mat, int cols, int y, int x) {
+    if (y > 0) {
+        if (*(mat + cols * (y - 1) + x) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int checkDownFilled(const int *mat, int rows, int cols, int y, int x) {
+    if (y < rows - 1) {
+        if (*(mat + cols * (y + 1) + x) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int checkLeftFilled(const int *mat, int cols, int y, int x) {
+    if (x > 0) {
+        if (*(mat + cols * y + x - 1) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int checkRightFilled(const int *mat, int cols, int y, int x) {
+    if (x < cols - 1) {
+        if (*(mat + cols * y + x + 1) == 1) {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int checkFilled(const int *mat, int cols, int y, int x) {
+    if (*(mat + cols * y + x) == 1) {
+        return 1;
+    }
+    return 0;
+}

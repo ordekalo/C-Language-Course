@@ -16,7 +16,9 @@ void findMaxSubMatrix() {
 }
 
 void pictureSquares() {
-
+    int boolMatrix[BIG_DIM][BIG_DIM];
+    initBoolMatrix((int *) boolMatrix, BIG_DIM, BIG_DIM);
+    printRects((const int *) boolMatrix, BIG_DIM, BIG_DIM);
 }
 
 void pictureLines() {
