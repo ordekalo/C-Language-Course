@@ -13,11 +13,11 @@ void printDefaultDim();
 
 void printMatrix(const int *mat, int rows, int cols);
 
-void printEffectiveMatrix(const int *mat, int startRow, int startCol, int subRows, int subCols);
+int getCellValue(const int *mat, int cols, int y, int x);
 
 void initMatrix(int *mat, int rows, int cols);
 
-int sumEffectiveMatrix(const int *mat, int startRow, int startCol, int rows, int cols);
+int sumEffectiveMatrix(const int *mat, int rows, int cols, int startRow, int startCol) ;
 
 void printMaxSubMatrix(const int *mat, int rows, int cols, int subRows, int subCols);
 

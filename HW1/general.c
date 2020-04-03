@@ -20,19 +20,23 @@ void printMatrix(const int *mat, int rows, int cols) {
     printf("\n");
 }
 
-void printEffectiveMatrix(const int *mat, int startRow, int startCol, int subRows, int subCols) {
+int getCellValue(const int *mat, int cols, int y, int x) {
+    return *((mat + y * cols) + x);
+}
+
+void printEffectiveMatrix(const int *mat, int rows, int cols, int startRow, int startCol, int subRows, int subCols) {
     int endRow = subRows + startRow;
-    if (endRow > BIG_DIM) {
-        endRow = BIG_DIM;
+    if (endRow > rows) {
+        endRow = rows;
     }
     int endCol = subCols + startCol;
-    if (endCol > BIG_DIM) {
-        endCol = BIG_DIM;
+    if (endCol > cols) {
+        endCol = cols;
     }
     for (int r = startRow; r < endRow; r++) {
         printf("|");
         for (int c = startCol; c < endCol; c++) {
-            printf("%4d|", *((mat + r * BIG_DIM) + c));
+            printf("%4d|", getCellValue(mat, cols, r, c));
         }
         printf("\n");
     }
@@ -46,24 +50,25 @@ void initMatrix(int *mat, int rows, int cols) {
         for (int c = 0; c < cols; c++) {
             int num = (rand() % (UPPER - LOWER + 1)) + LOWER;
             *(mat + r * cols + c) = num;
-            printf("%4d|", *(mat + r * cols + c));
+            printf("%4d|", getCellValue(mat, cols, r, c));
         }
         printf("\n");
     }
     printf("\n");
 }
 
-int sumEffectiveMatrix(const int *mat, int startRow, int startCol, int rows, int cols) {
+int sumEffectiveMatrix(const int *mat, int rows, int cols, int startRow, int startCol) {
     int sum = 0;
     int endRow = startRow + rows;
     int endCol = startCol + cols;
     for (int r = startRow; r < endRow; r++) {
         for (int c = startCol; c < endCol; c++) {
-            sum += (*((mat + r * BIG_DIM) + c));
+            sum += getCellValue(mat, cols, r, c);
         }
     }
     return sum;
 }
+
 
 void printMaxSubMatrix(const int *mat, int rows, int cols, int subRows, int subCols) {
     int maxSum, maxStartRow = 0, maxStartCol = 0;
@@ -71,10 +76,10 @@ void printMaxSubMatrix(const int *mat, int rows, int cols, int subRows, int subC
     int endCol = cols - subCols;
     int tmpSum;
     //In case user chooses the main matrix dimensions
-    maxSum = sumEffectiveMatrix(mat, maxStartRow, maxStartCol, subRows, subRows);
+    maxSum = sumEffectiveMatrix(mat, subRows, subRows, maxStartRow, maxStartCol);
     for (int r = 0; r < endRow; r++) {
         for (int c = 0; c < endCol; c++) {
-            tmpSum = sumEffectiveMatrix(mat, r, c, subRows, subRows);
+            tmpSum = sumEffectiveMatrix(mat, subRows, subRows, r, c);
             if (tmpSum > maxSum) {
                 maxSum = tmpSum;
                 maxStartRow = r;
@@ -83,7 +88,7 @@ void printMaxSubMatrix(const int *mat, int rows, int cols, int subRows, int subC
         }
     }
 
-    printEffectiveMatrix(mat, maxStartRow, maxStartCol, subRows, subCols);
+    printEffectiveMatrix(mat, rows, cols, maxStartRow, maxStartCol, subRows, subCols);
     printf("max sum is %d\n", maxSum);
 
 }
@@ -159,7 +164,7 @@ void initBoolMatrix(int *mat, int rows, int cols) {
         for (int c = 0; c < cols; c++) {
             int num = (rand() % 2);
             *(mat + r * cols + c) = num;
-            printf("%d|", *(mat + r * cols + c));
+            printf("%d|", getCellValue(mat, cols, r, c));
         }
         printf("\n");
     }
@@ -309,7 +314,7 @@ void printRects(const int *mat, int rows, int cols) {
 
 int isUpFilled(const int *mat, int cols, int y, int x) {
     if (y > 0) {
-        if (*(mat + cols * (y - 1) + x) == 1) {
+        if (isFilled(mat, cols, y - 1, x)) {
             return 1;
         }
     }
@@ -318,7 +323,7 @@ int isUpFilled(const int *mat, int cols, int y, int x) {
 
 int isDownFilled(const int *mat, int rows, int cols, int y, int x) {
     if (y < rows - 1) {
-        if (*(mat + cols * (y + 1) + x) == 1) {
+        if (isFilled(mat, cols, y + 1, x)) {
             return 1;
         }
     }
@@ -327,7 +332,7 @@ int isDownFilled(const int *mat, int rows, int cols, int y, int x) {
 
 int isLeftFilled(const int *mat, int cols, int y, int x) {
     if (x > 0) {
-        if (*(mat + cols * y + x - 1) == 1) {
+        if (isFilled(mat, cols, y, x - 1)) {
             return 1;
         }
     }
@@ -336,7 +341,7 @@ int isLeftFilled(const int *mat, int cols, int y, int x) {
 
 int isRightFilled(const int *mat, int cols, int y, int x) {
     if (x < cols - 1) {
-        if (*(mat + cols * y + x + 1) == 1) {
+        if (isFilled(mat, cols, y, x + 1)) {
             return 1;
         }
     }
@@ -344,7 +349,7 @@ int isRightFilled(const int *mat, int cols, int y, int x) {
 }
 
 int isFilled(const int *mat, int cols, int y, int x) {
-    if (*(mat + cols * y + x) == 1) {
+    if (getCellValue(mat, cols, y, x) == 1) {
         return 1;
     }
     return 0;
@@ -455,7 +460,7 @@ void initEmptyMatrix(int *mat, int rows, int cols) {
         printf("|");
         for (int c = 0; c < cols; c++) {
             *(mat + r * cols + c) = 0;
-            printf("%4d|", *(mat + r * cols + c));
+            printf("%4d|", getCellValue(mat, cols, r, c));
         }
         printf("\n");
     }
