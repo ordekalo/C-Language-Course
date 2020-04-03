@@ -3,6 +3,9 @@
 //
 
 #include "general.h"
+#include "q1.h"
+#include "q2.h"
+#include "q3.h"
 #include <stdio.h>
 
 
