@@ -3,13 +3,14 @@
 //
 #include "functionsLab1.h"
 #include <stdio.h>
+#include <stdlib.h>
 
-int main(){
+int main() {
     printHello();
 
-    int base;
+    char *pTr;
     printf("Please enter the triangle base:\n");
-    scanf("%d", &base);
+    int base = (int) strtol("%d", &pTr, 10);
     printTriangle(base);
 
     return 0;
