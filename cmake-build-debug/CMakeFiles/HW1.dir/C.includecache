@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/ordekalo/CLionProjects/C-Language-Course/Lab1/functionsLab1.c
+functionsLab1.h
+/home/ordekalo/CLionProjects/C-Language-Course/Lab1/functionsLab1.h
+stdio.h
+-
+
+/home/ordekalo/CLionProjects/C-Language-Course/Lab1/functionsLab1.h
+
+/home/ordekalo/CLionProjects/C-Language-Course/Lab1/main.c
+functionsLab1.h
+/home/ordekalo/CLionProjects/C-Language-Course/Lab1/functionsLab1.h
+stdio.h
+-
+
