@@ -1,0 +1,10 @@
+3
+2 4
+Cohen 4
+Levi 2
+1 1
+Momo 5
+3 4
+Gogo 1
+Popo 3
+Koko 6
