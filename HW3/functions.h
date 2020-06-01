@@ -17,4 +17,6 @@ int validateLongitude(double longitude);
 
 int charToInt(char c);
 
+char intToChar(int num);
+
 #endif //HW2_FUNCTIONS_H

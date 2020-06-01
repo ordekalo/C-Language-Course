@@ -80,4 +80,3 @@ int main() {
     } while (!stop);
     return 1;
 }
-

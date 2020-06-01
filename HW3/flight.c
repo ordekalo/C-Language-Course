@@ -127,3 +127,17 @@ int validateDateFormat(const char *date) {
     }
     return 1;
 }
+
+void loadDateFromString(Date *date, char *dateString) {
+    if (!validateDateFormat(dateString)) {
+        printf("Invalid Date Format\n");
+        return;
+    }
+    int day = charToInt(dateString[0]) * 10 + charToInt(dateString[1]);
+    int month = charToInt(dateString[3]) * 10 + charToInt(dateString[4]);
+    int year = charToInt(dateString[6]) * 1000 + charToInt(dateString[7]) * 100 + charToInt(dateString[8]) * 10 +
+               charToInt(dateString[9]);
+    date->day = day;
+    date->month = month;
+    date->year = year;
+}

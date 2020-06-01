@@ -115,3 +115,21 @@ int validateCode(const char *code) {
     return 1;
 }
 
+void saveAirport(FILE *file, const Airport *pApt) {
+    fprintf(file, "%s\n%s\n%s\n%lf %lf\n", pApt->name, pApt->country, pApt->code, pApt->longitude, pApt->latitude);
+}
+
+void readAirport(FILE *file, Airport *pApt) {
+    fscanf(file, "%s\n%s\n%s\n%lf %lf\n", pApt->name, pApt->country, pApt->code, &pApt->longitude, &pApt->latitude);
+    //read and allocate name
+    char *name = (char *) malloc((strlen(pApt->name) + 1) * sizeof(char));
+    if (!name) return;
+    strcpy(name, pApt->name);
+    pApt->name = name;
+    //read and allocate country_name
+    char *country = (char *) malloc((strlen(pApt->country) + 1) * sizeof(char));
+    if (!country) return;
+    strcpy(country, pApt->country);
+    pApt->country = country;
+}
+

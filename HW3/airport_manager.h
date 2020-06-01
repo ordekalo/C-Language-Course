@@ -26,4 +26,8 @@ int validateCodeExists(const AirportManager *pAptMgr, const char *code);
 
 Airport *getAirport(const AirportManager *pAptMgr, const char *code);
 
+void saveAirportManager(const char *fName, AirportManager *pAptMgr);
+
+void readAirportManager(const char *fName, AirportManager *pAptMgr);
+
 #endif //HW2_AIRPORT_MANAGER_H

@@ -9,13 +9,17 @@
 #include "airport_manager.h"
 #include <stdlib.h>
 
-#define DATE_LENGTH 10
+typedef struct {
+    int day;
+    int month;
+    int year;
+} Date;
 
 typedef struct {
     Airport *pAptFrom;
     Airport *pAptDest;
     int ATD; //Actual Time of Departure
-    char date[DATE_LENGTH];
+    Date date;
     double avgSpeed; //units MPH
 } Flight;
 
@@ -34,6 +38,8 @@ int validateFlightByCodes(const Flight *pFlt, const char *fromCode, const char *
 int countFlightsByCodes(Flight **pFlights, int amount, const char *fromCode, const char *destCode);
 
 int validateDateFormat(const char *date);
+
+void loadDateFromString(Date *date, char *dateString);
 
 
 #endif //HW2_FLIGHT_H

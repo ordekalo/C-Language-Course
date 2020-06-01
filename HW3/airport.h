@@ -7,6 +7,8 @@
 
 #define IATA_LENGTH 3
 
+#include <stdio.h>
+
 typedef struct {
     char *name;
     char *country;
@@ -32,5 +34,9 @@ int validateAirportByAirportCode(const Airport *pAirport, const char *code);
 double calculateDistanceA2A(const Airport *pApt1, const Airport *pApt2);
 
 void airportNameFormatter(char *name);
+
+void saveAirport(FILE *file, const Airport *pApt);
+
+void readAirport(FILE *file, Airport *pApt);
 
 #endif //HW2_AIRPORT_H

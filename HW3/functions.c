@@ -44,3 +44,7 @@ int validateLongitude(double longitude) {
 int charToInt(char c) {
     return c - '0';
 }
+
+char intToChar(int num) {
+    return num + '0';
+}

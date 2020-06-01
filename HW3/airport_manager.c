@@ -77,8 +77,39 @@ Airport *getAirport(const AirportManager *pAptMgr, const char *code) {
 }
 
 int validateCodeExists(const AirportManager *pAptMgr, const char *code) {
-    if(getAirport(pAptMgr,code)){
+    if (getAirport(pAptMgr, code)) {
         return 1;
     }
     return 0;
+}
+
+void saveAirportManager(const char *fName, AirportManager *pAptMgr) {
+    FILE *file = fopen(fName, "w");
+    if (!file) return;
+
+    fprintf(file, "%d\n", pAptMgr->amount);
+
+    for (int i = 0; i < pAptMgr->amount; ++i) {
+        saveAirport(file, &pAptMgr->allAirports[i]);
+    }
+    fclose(file);
+}
+
+
+void readAirportManager(const char *fName, AirportManager *pAptMgr) {
+    FILE *file = fopen(fName, "r");
+    if (!file) return;
+
+    fscanf(file, "%d\n", &pAptMgr->amount);
+
+    pAptMgr->allAirports = (Airport *) malloc(pAptMgr->amount * sizeof(Airport));
+    if (!pAptMgr->allAirports) return;
+
+    for (int i = 0; i < pAptMgr->amount; ++i) {
+        Airport apt;
+        readAirport(file, &apt);
+        pAptMgr->allAirports[i] = apt;
+    }
+
+    fclose(file);
 }
