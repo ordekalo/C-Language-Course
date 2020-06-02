@@ -5,6 +5,8 @@
 #ifndef HW2_FUNCTIONS_H
 #define HW2_FUNCTIONS_H
 
+#include <stdio.h>
+
 #define EARTH_RADIUS 3950 //in miles
 
 double degToRad(double degrees);
@@ -20,5 +22,9 @@ int charToInt(char c);
 char intToChar(int num);
 
 void generalArrayFunction(void *arr, int size, int typeSize, void (*func)(void *));
+
+char *getStrExactLength(FILE *file);
+
+char *myGets(char *buffer, int size, FILE *f);
 
 #endif //HW2_FUNCTIONS_H

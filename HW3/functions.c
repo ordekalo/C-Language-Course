@@ -5,6 +5,9 @@
 #include "functions.h"
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
+
+#define TEMP_BUFFER_SIZE 255
 
 double degToRad(double degrees) {
     //conversion between degrees to radians
@@ -53,4 +56,26 @@ void generalArrayFunction(void *arr, int size, int typeSize, void (*func)(void *
     for (int i = 0; i < size; ++i) {
         func((char *) arr + i * typeSize);
     }
+}
+
+char* getStrExactLength(FILE* file)
+{
+    char temp[TEMP_BUFFER_SIZE];
+    myGets(temp, TEMP_BUFFER_SIZE, file);
+
+    return strdup(temp);
+
+}
+char* myGets(char* buffer, int size, FILE* f)
+{
+    if (buffer != NULL && size > 0)
+    {
+        if (fgets(buffer, size, f))
+        {
+            buffer[strcspn(buffer, "\n")] = '\0';
+            return buffer;
+        }
+        *buffer = '\0';
+    }
+    return NULL;
 }
