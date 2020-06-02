@@ -5,6 +5,7 @@
 #include "airport_manager.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "functions.h"
 
 int initAirportManager(AirportManager *pAptMgr) {
     pAptMgr->amount = 0;
@@ -43,10 +44,7 @@ void printAirportManager(const AirportManager *pAptMgr) {
 }
 
 void freeAirportManager(AirportManager *pAptMgr) {
-    for (int i = 0; i < pAptMgr->amount; ++i) {
-        freeAirport(&pAptMgr->allAirports[i]);
-    }
-    free(pAptMgr->allAirports);
+    generalArrayFunction(pAptMgr->allAirports, pAptMgr->amount, sizeof(Airport), freeAirport);
 }
 
 int addAirport(AirportManager *pAptMgr, const Airport *pApt) {

@@ -11,14 +11,14 @@
 
 
 void printFlight(void *pFlt) {
-    Flight *pFlight = (Flight *) pFlt;
+    Flight *pFlight = *(Flight **) pFlt;
     printf("\nFlight from %3s to %3s in %d:00 at %d/%d/%d\n", pFlight->pAptFrom->code, pFlight->pAptDest->code,
            pFlight->ATD,
            pFlight->date.day, pFlight->date.month, pFlight->date.year);
     printf("Average speed: %lf mph, Distance: %lf miles\n", pFlight->avgSpeed,
            calculateDistanceA2A(pFlight->pAptFrom, pFlight->pAptDest));
 
-    double flightHours = calculateFlightTime(pFlt);
+    double flightHours = calculateFlightTime(pFlight);
     int hours = floor(flightHours);
     int minutes = (int) ((flightHours - hours) * 60);
 

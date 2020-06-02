@@ -36,6 +36,7 @@ void printAirline(const Airline *pAirline) {
     printf("Airline %s has %d airplanes at her fleet with %d flight lines: (sorted by %s ascending)\n", pAirline->name,
            pAirline->fleetSize,
            pAirline->flightAmount, TypeString[pAirline->sortType]);
+
     generalArrayFunction(pAirline->allFlights, pAirline->flightAmount, sizeof(Flight *), printFlight);
 }
 

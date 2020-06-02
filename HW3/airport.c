@@ -75,9 +75,10 @@ void printAirport(const Airport *pApt) {
            pApt->longitude);
 }
 
-void freeAirport(Airport *pApt) {
-    free(pApt->name);
-    free(pApt->country);
+void freeAirport(void *pApt) {
+    Airport *pAirport = (Airport *) pApt;
+    free(pAirport->name);
+    free(pAirport->country);
 }
 
 int compareAirports(const Airport *pApt1, const Airport *pApt2) {

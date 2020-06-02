@@ -23,7 +23,7 @@ void initAirport(Airport *pApt);
 
 void printAirport(const Airport *pApt);
 
-void freeAirport(Airport *pApt);
+void freeAirport(void *pApt);
 
 int validateCode(const char *code);
 
