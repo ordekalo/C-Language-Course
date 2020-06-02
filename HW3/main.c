@@ -3,6 +3,7 @@
 #include <time.h>
 
 #include "airline.h"
+#include "compare.h"
 
 #define ADD_FLIGHT 1
 #define ADD_AIRPORT 2
@@ -56,6 +57,19 @@ int main() {
             case ADD_AIRPORT:
                 initAirport(&airport);
                 addAirport(&aptMgr, &airport);
+                switch (airline.sortType) {
+                    case HOUR:
+                        qsort(airline.allFlights, airline.flightAmount, sizeof(Flight *), compareByHour);
+                        break;
+                    case DATE:
+                        qsort(airline.allFlights, airline.flightAmount, sizeof(Flight *), compareByDate);
+                        break;
+                    case SPEED:
+                        qsort(airline.allFlights, airline.flightAmount, sizeof(Flight *), compareBySpeed);
+                        break;
+                    case NofTypes:
+                        break;
+                }
                 break;
             case AIRLINE_INFO:
                 printAirline(&airline);
