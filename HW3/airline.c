@@ -8,7 +8,7 @@
 #include "airline.h"
 #include "functions.h"
 
-const char *TypeString[NofTypes] = {"HOUR", "DATE", "SPEED"};
+const char *TypeString[NofTypes] = {"ATD", "DATE", "SPEED"};
 
 int initAirline(Airline *pAirline) {
     pAirline->name = createDynStr("Airline Name");

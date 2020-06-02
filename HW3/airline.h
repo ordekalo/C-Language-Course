@@ -9,7 +9,7 @@
 #include "flight.h"
 
 typedef enum {
-    HOUR, DATE, SPEED, NofTypes
+    ATD, DATE, SPEED, NofTypes
 } SortType;
 
 const char *TypeString[NofTypes];

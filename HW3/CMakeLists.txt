@@ -10,6 +10,6 @@ add_executable(HW3
         flight.c flight.h
         airport.c airport.h
         functions.c functions.h
-        compare.c compare.h)
+        compare.c compare.h binary_search.c binary_search.h)
 
 target_link_libraries(HW3 m)

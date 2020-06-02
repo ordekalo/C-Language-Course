@@ -5,7 +5,7 @@
 #include "compare.h"
 #include "flight.h"
 
-int compareByHour(const void *flight1,const void *flight2) {
+int compareByATD(const void *flight1, const void *flight2) {
     Flight f1 = *((Flight *) flight1);
     Flight f2 = *((Flight *) flight2);
 

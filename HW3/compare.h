@@ -5,7 +5,7 @@
 #ifndef HW3_COMPARE_H
 #define HW3_COMPARE_H
 
-int compareByHour(const void *flight1, const void *flight2);
+int compareByATD(const void *flight1, const void *flight2);
 
 int compareByDate(const void *flight1, const void *flight2);
 
