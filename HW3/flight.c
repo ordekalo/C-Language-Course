@@ -10,11 +10,13 @@
 #include "functions.h"
 
 
-void printFlight(const Flight *pFlt) {
-    printf("\nFlight from %3s to %3s in %d:00 at %s\n", pFlt->pAptFrom->code, pFlt->pAptDest->code, pFlt->ATD,
-           pFlt->date);
-    printf("Average speed: %lf mph, Distance: %lf miles\n", pFlt->avgSpeed,
-           calculateDistanceA2A(pFlt->pAptFrom, pFlt->pAptDest));
+void printFlight(void *pFlt) {
+    Flight *pFlight = (Flight *) pFlt;
+    printf("\nFlight from %3s to %3s in %d:00 at %d/%d/%d\n", pFlight->pAptFrom->code, pFlight->pAptDest->code,
+           pFlight->ATD,
+           pFlight->date.day, pFlight->date.month, pFlight->date.year);
+    printf("Average speed: %lf mph, Distance: %lf miles\n", pFlight->avgSpeed,
+           calculateDistanceA2A(pFlight->pAptFrom, pFlight->pAptDest));
 
     double flightHours = calculateFlightTime(pFlt);
     int hours = floor(flightHours);
@@ -82,6 +84,7 @@ void initFlight(Flight *pFlt, const AirportManager *aptMgr) {
         return;
     }
     pFlt->pAptFrom = pAptFrom;
+
     Airport *pAptDest = getAirport(aptMgr, codeDest);
     if (!pAptDest) {
         printf("%s Doesn\'t Exist at Airport Manager.\n", codeDest);
@@ -94,15 +97,17 @@ void initFlight(Flight *pFlt, const AirportManager *aptMgr) {
         scanf(" %d", &pFlt->ATD);
     } while (pFlt->ATD > 23 || pFlt->ATD < 0);
 
+    char dateString[20];
     do {
         printf("Please Enter Date Of Departure: (dd/mm/yyyy Format Only!)\n");
-        scanf(" %[^'\n']s", pFlt->date);
-    } while (!validateDateFormat(pFlt->date));
+        scanf(" %[^'\n']s", dateString);
+    } while (!validateDateFormat(dateString));
+    loadDateFromString(&pFlt->date, dateString);
 
     do {
         printf("Please Enter Average Speed Of Flight:\n");
         scanf(" %lf", &pFlt->avgSpeed);
-    } while (pFlt->ATD > 23 || pFlt->ATD < 0);
+    } while (pFlt->avgSpeed > 1000 || pFlt->avgSpeed < 0);
 }
 
 void freeFlight(Flight *pFlt) {
@@ -141,3 +146,68 @@ void loadDateFromString(Date *date, char *dateString) {
     date->month = month;
     date->year = year;
 }
+
+void saveBinFlight(FILE *file, const Flight *pFlt) {
+    //Source IATA write
+    fwrite(pFlt->pAptFrom->name, sizeof(char), strlen(pFlt->pAptFrom->name), file);
+    //Destination IATA write
+    fwrite(pFlt->pAptDest->name, sizeof(char), strlen(pFlt->pAptDest->name), file);
+    //Flight Hour write
+    fwrite(&pFlt->ATD, sizeof(int), 1, file);
+    //rep stringDate length write
+    int stringLength = 11;
+    fwrite(&stringLength, sizeof(int), 1, file);
+    //Date write
+    saveBinDate(file, &pFlt->date);
+    //AVG Speed write
+    fwrite(&pFlt->avgSpeed, sizeof(double), 1, file);
+}
+
+Flight *loadBinFlight(FILE *file, AirportManager *pAptMgr) {
+    Flight *pFlt = (Flight *) malloc(sizeof(Flight));
+    if (!pFlt) return NULL;
+
+    //Source IATA read
+    char *sourceIATA;
+    fread(sourceIATA, sizeof(char), IATA_LENGTH + 1, file);
+    pFlt->pAptFrom = getAirport(pAptMgr, sourceIATA);
+    if (!pFlt->pAptFrom) return NULL;
+
+    //Destination IATA read
+    char *destIATA;
+    fread(destIATA, sizeof(char), IATA_LENGTH + 1, file);
+    pFlt->pAptDest = getAirport(pAptMgr, destIATA);
+    if (!pFlt->pAptDest) return NULL;
+
+    //Flight Hour read
+    fread(&pFlt->ATD, sizeof(int), 1, file);
+    //rep stringDate length read
+    int stringLength;
+    fread(&stringLength, sizeof(int), 1, file);
+    //Date read
+    loadBinDate(file, &pFlt->date);
+    //AVG Speed read
+    fread(&pFlt->avgSpeed, sizeof(double), 1, file);
+
+    return pFlt;
+}
+
+
+void saveBinDate(FILE *file, const Date *pDate) {
+    //day write
+    fwrite(&pDate->day, sizeof(int), 1, file);
+    //month write
+    fwrite(&pDate->month, sizeof(int), 1, file);
+    //year write
+    fwrite(&pDate->year, sizeof(int), 1, file);
+}
+
+void loadBinDate(FILE *file, Date *pDate) {
+    //day read
+    fread(&pDate->day, sizeof(int), 1, file);
+    //month read
+    fread(&pDate->month, sizeof(int), 1, file);
+    //year read
+    fread(&pDate->year, sizeof(int), 1, file);
+}
+

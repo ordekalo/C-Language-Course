@@ -11,3 +11,5 @@ add_executable(HW3
         airport.c airport.h
         functions.c functions.h
         )
+
+target_link_libraries(HW3 m)

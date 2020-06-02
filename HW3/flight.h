@@ -27,7 +27,7 @@ void scanCodes(char *codeFrom, char *codeDest);
 
 void initFlight(Flight *pFlt, const AirportManager *aptMgr);
 
-void printFlight(const Flight *pFlt);
+void printFlight(void *pFlt);
 
 void freeFlight(Flight *pFlt);
 
@@ -40,6 +40,14 @@ int countFlightsByCodes(Flight **pFlights, int amount, const char *fromCode, con
 int validateDateFormat(const char *date);
 
 void loadDateFromString(Date *date, char *dateString);
+
+void saveBinFlight(FILE *file, const Flight *pFlt);
+
+Flight *loadBinFlight(FILE *file, AirportManager *pAptMgr);
+
+void saveBinDate(FILE *file, const Date *pDate);
+
+void loadBinDate(FILE *file, Date *pDate);
 
 
 #endif //HW2_FLIGHT_H

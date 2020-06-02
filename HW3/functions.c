@@ -46,5 +46,11 @@ int charToInt(char c) {
 }
 
 char intToChar(int num) {
-    return num + '0';
+    return (char) (num + '0');
+}
+
+void generalArrayFunction(void *arr, int size, int typeSize, void (*func)(void *)) {
+    for (int i = 0; i < size; ++i) {
+        func((char *) arr + i * typeSize);
+    }
 }

@@ -19,4 +19,6 @@ int charToInt(char c);
 
 char intToChar(int num);
 
+void generalArrayFunction(void *arr, int size, int typeSize, void (*func)(void *));
+
 #endif //HW2_FUNCTIONS_H

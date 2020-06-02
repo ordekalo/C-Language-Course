@@ -111,17 +111,152 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named HW4
+# Target rules for targets named HW3
 
 # Build rule for target.
-HW4: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 HW4
-.PHONY : HW4
+HW3: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 HW3
+.PHONY : HW3
 
 # fast build rule for target.
-HW4/fast:
-	$(MAKE) -f CMakeFiles/HW4.dir/build.make CMakeFiles/HW4.dir/build
-.PHONY : HW4/fast
+HW3/fast:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/build
+.PHONY : HW3/fast
+
+airline.o: airline.c.o
+
+.PHONY : airline.o
+
+# target to build an object file
+airline.c.o:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airline.c.o
+.PHONY : airline.c.o
+
+airline.i: airline.c.i
+
+.PHONY : airline.i
+
+# target to preprocess a source file
+airline.c.i:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airline.c.i
+.PHONY : airline.c.i
+
+airline.s: airline.c.s
+
+.PHONY : airline.s
+
+# target to generate assembly for a file
+airline.c.s:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airline.c.s
+.PHONY : airline.c.s
+
+airport.o: airport.c.o
+
+.PHONY : airport.o
+
+# target to build an object file
+airport.c.o:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airport.c.o
+.PHONY : airport.c.o
+
+airport.i: airport.c.i
+
+.PHONY : airport.i
+
+# target to preprocess a source file
+airport.c.i:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airport.c.i
+.PHONY : airport.c.i
+
+airport.s: airport.c.s
+
+.PHONY : airport.s
+
+# target to generate assembly for a file
+airport.c.s:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airport.c.s
+.PHONY : airport.c.s
+
+airport_manager.o: airport_manager.c.o
+
+.PHONY : airport_manager.o
+
+# target to build an object file
+airport_manager.c.o:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airport_manager.c.o
+.PHONY : airport_manager.c.o
+
+airport_manager.i: airport_manager.c.i
+
+.PHONY : airport_manager.i
+
+# target to preprocess a source file
+airport_manager.c.i:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airport_manager.c.i
+.PHONY : airport_manager.c.i
+
+airport_manager.s: airport_manager.c.s
+
+.PHONY : airport_manager.s
+
+# target to generate assembly for a file
+airport_manager.c.s:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airport_manager.c.s
+.PHONY : airport_manager.c.s
+
+flight.o: flight.c.o
+
+.PHONY : flight.o
+
+# target to build an object file
+flight.c.o:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/flight.c.o
+.PHONY : flight.c.o
+
+flight.i: flight.c.i
+
+.PHONY : flight.i
+
+# target to preprocess a source file
+flight.c.i:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/flight.c.i
+.PHONY : flight.c.i
+
+flight.s: flight.c.s
+
+.PHONY : flight.s
+
+# target to generate assembly for a file
+flight.c.s:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/flight.c.s
+.PHONY : flight.c.s
+
+functions.o: functions.c.o
+
+.PHONY : functions.o
+
+# target to build an object file
+functions.c.o:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/functions.c.o
+.PHONY : functions.c.o
+
+functions.i: functions.c.i
+
+.PHONY : functions.i
+
+# target to preprocess a source file
+functions.c.i:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/functions.c.i
+.PHONY : functions.c.i
+
+functions.s: functions.c.s
+
+.PHONY : functions.s
+
+# target to generate assembly for a file
+functions.c.s:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/functions.c.s
+.PHONY : functions.c.s
 
 main.o: main.c.o
 
@@ -129,7 +264,7 @@ main.o: main.c.o
 
 # target to build an object file
 main.c.o:
-	$(MAKE) -f CMakeFiles/HW4.dir/build.make CMakeFiles/HW4.dir/main.c.o
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/main.c.o
 .PHONY : main.c.o
 
 main.i: main.c.i
@@ -138,7 +273,7 @@ main.i: main.c.i
 
 # target to preprocess a source file
 main.c.i:
-	$(MAKE) -f CMakeFiles/HW4.dir/build.make CMakeFiles/HW4.dir/main.c.i
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/main.c.i
 .PHONY : main.c.i
 
 main.s: main.c.s
@@ -147,7 +282,7 @@ main.s: main.c.s
 
 # target to generate assembly for a file
 main.c.s:
-	$(MAKE) -f CMakeFiles/HW4.dir/build.make CMakeFiles/HW4.dir/main.c.s
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/main.c.s
 .PHONY : main.c.s
 
 # Help Target
@@ -158,7 +293,22 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... HW4"
+	@echo "... HW3"
+	@echo "... airline.o"
+	@echo "... airline.i"
+	@echo "... airline.s"
+	@echo "... airport.o"
+	@echo "... airport.i"
+	@echo "... airport.s"
+	@echo "... airport_manager.o"
+	@echo "... airport_manager.i"
+	@echo "... airport_manager.s"
+	@echo "... flight.o"
+	@echo "... flight.i"
+	@echo "... flight.s"
+	@echo "... functions.o"
+	@echo "... functions.i"
+	@echo "... functions.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
