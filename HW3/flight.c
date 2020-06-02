@@ -211,3 +211,13 @@ void loadBinDate(FILE *file, Date *pDate) {
     fread(&pDate->year, sizeof(int), 1, file);
 }
 
+void takeoff(int amount, ...) {
+    va_list flights;
+    va_start(flights, amount);
+    for (int i = 0; i < amount; ++i) {
+        printf("took off ");
+        printFlight(va_arg(flights, Flight*));
+    }
+    va_end(flights);
+}
+

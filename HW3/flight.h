@@ -8,6 +8,7 @@
 #include "airport.h"
 #include "airport_manager.h"
 #include <stdlib.h>
+#include <stdarg.h>
 
 typedef struct {
     int day;
@@ -49,5 +50,6 @@ void saveBinDate(FILE *file, const Date *pDate);
 
 void loadBinDate(FILE *file, Date *pDate);
 
+void takeoff(int amount, ...);
 
 #endif //HW2_FLIGHT_H

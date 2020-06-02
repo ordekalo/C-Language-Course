@@ -27,6 +27,8 @@ int menu() {
     printf("%d - Print Airline Info\n", AIRLINE_INFO);
     printf("%d - Print Airport Manager Info\n", AIRPORT_MANAGER_INFO);
     printf("%d - Print Flights Between Destinations Count\n", FLIGHTS_BETWEEN_DEST_COUNT);
+    printf("%d - Sort Flights By Selected Sort Method\n", SORT_FLIGHTS);
+    printf("%d - BSearch and Print By Selected Sort Input\n", BINARY_SEARCH_FLIGHT);
     printf("%d - Quit\n", QUIT);
     scanf(" %d", &option);
     return option;
@@ -73,6 +75,7 @@ int main() {
                 break;
             case SORT_FLIGHTS:
                 //sort by type
+                printf("Sorted By %s\n", TypeString[airline.sortType]);
                 switch (airline.sortType) {
                     case ATD:
                         qsort(airline.allFlights, airline.flightAmount, sizeof(Flight *), compareByATD);
@@ -118,6 +121,9 @@ int main() {
                 if (pFlt) printFlight(pFlt);
                 break;
             case QUIT:
+                //performing takeoff func for 3 first flights
+                takeoff(3, airline.allFlights[0], airline.allFlights[1], airline.allFlights[2]);
+
                 printf("Bye bye\n");
                 freeAirline(&airline);
                 freeAirportManager(&aptMgr);

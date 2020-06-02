@@ -204,6 +204,60 @@ airport_manager.c.s:
 	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/airport_manager.c.s
 .PHONY : airport_manager.c.s
 
+binary_search.o: binary_search.c.o
+
+.PHONY : binary_search.o
+
+# target to build an object file
+binary_search.c.o:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/binary_search.c.o
+.PHONY : binary_search.c.o
+
+binary_search.i: binary_search.c.i
+
+.PHONY : binary_search.i
+
+# target to preprocess a source file
+binary_search.c.i:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/binary_search.c.i
+.PHONY : binary_search.c.i
+
+binary_search.s: binary_search.c.s
+
+.PHONY : binary_search.s
+
+# target to generate assembly for a file
+binary_search.c.s:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/binary_search.c.s
+.PHONY : binary_search.c.s
+
+compare.o: compare.c.o
+
+.PHONY : compare.o
+
+# target to build an object file
+compare.c.o:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/compare.c.o
+.PHONY : compare.c.o
+
+compare.i: compare.c.i
+
+.PHONY : compare.i
+
+# target to preprocess a source file
+compare.c.i:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/compare.c.i
+.PHONY : compare.c.i
+
+compare.s: compare.c.s
+
+.PHONY : compare.s
+
+# target to generate assembly for a file
+compare.c.s:
+	$(MAKE) -f CMakeFiles/HW3.dir/build.make CMakeFiles/HW3.dir/compare.c.s
+.PHONY : compare.c.s
+
 flight.o: flight.c.o
 
 .PHONY : flight.o
@@ -303,6 +357,12 @@ help:
 	@echo "... airport_manager.o"
 	@echo "... airport_manager.i"
 	@echo "... airport_manager.s"
+	@echo "... binary_search.o"
+	@echo "... binary_search.i"
+	@echo "... binary_search.s"
+	@echo "... compare.o"
+	@echo "... compare.i"
+	@echo "... compare.s"
 	@echo "... flight.o"
 	@echo "... flight.i"
 	@echo "... flight.s"
