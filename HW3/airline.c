@@ -103,9 +103,10 @@ void readBinAirline(const char *fName, Airline *pAirline, AirportManager *pAptMg
     printf("airline name length: %d\n", airlineNameLen);
 
     //airline name read
-    pAirline->name = (char *) malloc(sizeof(char) * airlineNameLen);
+    pAirline->name = (char *) malloc(sizeof(char) * (airlineNameLen + 1));
     fread(pAirline->name, sizeof(char), airlineNameLen, file);
     printf("airline name: %s\n", pAirline->name);
+    pAirline->name[airlineNameLen] = '\0';
 
     //flight amount read
     fread(&pAirline->flightAmount, sizeof(int), 1, file);
@@ -118,7 +119,7 @@ void readBinAirline(const char *fName, Airline *pAirline, AirportManager *pAptMg
     pAirline->allFlights = (Flight **) malloc(sizeof(Flight *) * (pAirline->flightAmount));
     if (!pAirline->allFlights) return;
 
-    //write flights
+    //read flights
     for (int i = 0; i < pAirline->flightAmount; ++i) {
         pAirline->allFlights[i] = loadBinFlight(file, pAptMgr);
     }

@@ -9,14 +9,18 @@
 #include <ctype.h>
 #include "functions.h"
 
+void printDate(Date date) {
+    printf("Date: %2d/%2d/%2d\n", date.day, date.month, date.year);
+}
 
 void printFlight(void *pFlt) {
     Flight *pFlight = *(Flight **) pFlt;
-    printf("\nFlight from %3s to %3s in %d:00 at %d/%d/%d\n", pFlight->pAptFrom->code, pFlight->pAptDest->code,
-           pFlight->ATD,
-           pFlight->date.day, pFlight->date.month, pFlight->date.year);
-    printf("Average speed: %lf mph, Distance: %lf miles\n", pFlight->avgSpeed,
-           calculateDistanceA2A(pFlight->pAptFrom, pFlight->pAptDest));
+
+    printf("Flight From %s To %s\t", pFlight->pAptFrom->code, pFlight->pAptDest->code);
+    printDate(pFlight->date);
+    printf("Hour: %d Average Speed: %.2lf\n", pFlight->ATD, pFlight->avgSpeed);
+    double dist = calculateDistanceA2A(pFlight->pAptFrom, pFlight->pAptDest);
+    printf("Flight distance  %.2lf miles\t", dist);
 
     double flightHours = calculateFlightTime(pFlight);
     int hours = floor(flightHours);
@@ -149,9 +153,9 @@ void loadDateFromString(Date *date, char *dateString) {
 
 void saveBinFlight(FILE *file, const Flight *pFlt) {
     //Source IATA write
-    fwrite(pFlt->pAptFrom->name, sizeof(char), strlen(pFlt->pAptFrom->name), file);
+    fwrite(pFlt->pAptFrom->code, sizeof(char), strlen(pFlt->pAptFrom->code), file);
     //Destination IATA write
-    fwrite(pFlt->pAptDest->name, sizeof(char), strlen(pFlt->pAptDest->name), file);
+    fwrite(pFlt->pAptDest->code, sizeof(char), strlen(pFlt->pAptDest->code), file);
     //Flight Hour write
     fwrite(&pFlt->ATD, sizeof(int), 1, file);
     //rep stringDate length write
@@ -168,14 +172,16 @@ Flight *loadBinFlight(FILE *file, AirportManager *pAptMgr) {
     if (!pFlt) return NULL;
 
     //Source IATA read
-    char *sourceIATA;
+    char sourceIATA[IATA_LENGTH + 1];
     fread(sourceIATA, sizeof(char), IATA_LENGTH + 1, file);
+    sourceIATA[IATA_LENGTH] = '\0';
     pFlt->pAptFrom = getAirport(pAptMgr, sourceIATA);
     if (!pFlt->pAptFrom) return NULL;
 
     //Destination IATA read
-    char *destIATA;
+    char destIATA[IATA_LENGTH + 1];
     fread(destIATA, sizeof(char), IATA_LENGTH + 1, file);
+    destIATA[IATA_LENGTH] = '\0';
     pFlt->pAptDest = getAirport(pAptMgr, destIATA);
     if (!pFlt->pAptDest) return NULL;
 
@@ -185,7 +191,7 @@ Flight *loadBinFlight(FILE *file, AirportManager *pAptMgr) {
     int stringLength;
     fread(&stringLength, sizeof(int), 1, file);
     //Date read
-    loadBinDate(file, &pFlt->date);
+    loadBinDate(file, NULL);
     //AVG Speed read
     fread(&pFlt->avgSpeed, sizeof(double), 1, file);
 
@@ -202,7 +208,7 @@ void saveBinDate(FILE *file, const Date *pDate) {
     fwrite(&pDate->year, sizeof(int), 1, file);
 }
 
-void loadBinDate(FILE *file, Date *pDate) {
+void *loadBinDate(FILE *file, Date *pDate) {
     //day read
     fread(&pDate->day, sizeof(int), 1, file);
     //month read
@@ -211,18 +217,17 @@ void loadBinDate(FILE *file, Date *pDate) {
     fread(&pDate->year, sizeof(int), 1, file);
 }
 
-void takeoff(int amount, ...) {
+void takeoff(Flight *pFlt, ...) {
     va_list flights;
-    va_start(flights, amount);
-    for (int i = 0; i < amount; ++i) {
-        Flight *pFlt = va_arg(flights, Flight*);
-        if (!pFlt) {
-            va_end(flights);
-            return;
-        }
-        printf("took off ");
-        printFlight(pFlt);
+    va_start(flights, pFlt);
+    Flight *takeoff = pFlt;
+
+    while (takeoff != NULL) {
+        printf("\nFlight from \"%s\" to \"%s\" is taking off\n", takeoff->pAptFrom->name,
+               takeoff->pAptDest->name);
+        takeoff = va_arg(flights, Flight*);
     }
+
     va_end(flights);
 }
 

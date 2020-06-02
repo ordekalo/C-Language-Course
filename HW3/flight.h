@@ -48,8 +48,10 @@ Flight *loadBinFlight(FILE *file, AirportManager *pAptMgr);
 
 void saveBinDate(FILE *file, const Date *pDate);
 
-void loadBinDate(FILE *file, Date *pDate);
+void *loadBinDate(FILE *file, Date *pDate);
 
-void takeoff(int amount, ...);
+void takeoff(Flight *pFlt, ...);
+
+void printDate(Date date);
 
 #endif //HW2_FLIGHT_H
