@@ -12,7 +12,7 @@ Flight *findFlightByATD(Flight **flightArr, int size, int atd) {
     Flight temp;
     temp.ATD = atd;
 
-    pFlt = (Flight *) bsearch(&temp, flightArr, size, sizeof(Flight *), compareByATD);
+    pFlt = bsearch(&temp, flightArr, size, sizeof(Flight *), compareByATD);
     if (!pFlt) {
         printf("the flights array is not sorted by %s can\'t find flight\n", "ATD");
         return NULL;
@@ -26,7 +26,7 @@ Flight *findFlightBySpeed(Flight **flightArr, int size, double speed) {
     Flight temp;
     temp.avgSpeed = speed;
 
-    pFlt = (Flight *) bsearch(&temp, flightArr, size, sizeof(Flight *), compareBySpeed);
+    pFlt = bsearch(&temp, flightArr, size, sizeof(Flight *), compareBySpeed);
     if (!pFlt) {
         printf("the flights array is not sorted by %s can\'t find flight\n", "Speed");
         return NULL;
@@ -42,7 +42,7 @@ Flight *findFlightByDate(Flight **flightArr, int size, char *dateString) {
     Flight temp;
     loadDateFromString(&temp.date, dateString);
 
-    pFlt = (Flight *) bsearch(&temp, flightArr, size, sizeof(Flight *), compareByDate);
+    pFlt = bsearch(&temp, flightArr, size, sizeof(Flight *), compareByDate);
     if (!pFlt) {
         printf("the flights array is not sorted by %s can\'t find flight\n", "Date");
         return NULL;

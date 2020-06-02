@@ -223,7 +223,7 @@ void takeoff(Flight *pFlt, ...) {
     Flight *takeoff = pFlt;
 
     while (takeoff != NULL) {
-        printf("\nFlight from \"%s\" to \"%s\" is taking off\n", takeoff->pAptFrom->name,
+        printf("\nFlight from %s to %s has took off!\n", takeoff->pAptFrom->name,
                takeoff->pAptDest->name);
         takeoff = va_arg(flights, Flight*);
     }

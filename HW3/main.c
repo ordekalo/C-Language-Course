@@ -80,19 +80,21 @@ int main() {
             case SORT_FLIGHTS:
                 //sort by type
                 printf("Sorted By %s\n", TypeString[airline.sortType]);
+                int (*compare)(const void *, const void *) = NULL;
                 switch (airline.sortType) {
                     case ATD:
-                        qsort(airline.allFlights, airline.flightAmount, sizeof(Flight *), compareByATD);
+                        compare = compareByATD;
                         break;
                     case DATE:
-                        qsort(airline.allFlights, airline.flightAmount, sizeof(Flight *), compareByDate);
+                        compare = compareByDate;
                         break;
                     case SPEED:
-                        qsort(airline.allFlights, airline.flightAmount, sizeof(Flight *), compareBySpeed);
+                        compare = compareBySpeed;
                         break;
                     case NofTypes:
                         break;
                 }
+                qsort(airline.allFlights, airline.flightAmount, sizeof(Flight *), compare);
                 break;
             case BINARY_SEARCH_FLIGHT:
                 switch (airline.sortType) {
