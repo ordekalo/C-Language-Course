@@ -49,6 +49,10 @@ int main() {
     Airport airport;
     char fromCode[100], destCode[100];
 
+    int atd;
+    char dateString[20];
+    double speed;
+
     int option;
     int stop = 0;
     srand((unsigned) time(NULL));
@@ -80,7 +84,7 @@ int main() {
             case SORT_FLIGHTS:
                 //sort by type
                 printf("Sorted By %s\n", TypeString[airline.sortType]);
-                int (*compare)(const void *, const void *) = NULL;
+                int (*compare)(const void *, const void *) =NULL;
                 switch (airline.sortType) {
                     case ATD:
                         compare = compareByATD;
@@ -93,15 +97,13 @@ int main() {
                         break;
                     case NofTypes:
                         break;
+                    default:
+                        compare = compareByATD;
                 }
                 qsort(airline.allFlights, airline.flightAmount, sizeof(Flight *), compare);
                 break;
             case BINARY_SEARCH_FLIGHT:
                 switch (airline.sortType) {
-                    int atd;
-                    char dateString[20];
-                    double speed;
-
                     case ATD:
                         do {
                             printf("Please Enter Actual Time Of Departure: (23-0)\n");
@@ -123,12 +125,14 @@ int main() {
                         } while (speed > 1000 || speed < 0);
                         pFlt = findFlightBySpeed(airline.allFlights, airline.flightAmount, speed);
                         break;
+                    case NofTypes:
+                        break;
                 }
                 if (pFlt) printFlight(pFlt);
                 break;
             case QUIT:
                 //performing takeoff func for 3 first flights
-                takeoff(3, airline.allFlights[0], airline.allFlights[1], airline.allFlights[2]);
+                takeoff(airline.allFlights[0], airline.allFlights[1], airline.allFlights[2], NULL);
 
                 printf("Bye bye\n");
                 saveAirportManager(AIRPORT_MANAGER_FILE, &aptMgr);
