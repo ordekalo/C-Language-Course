@@ -121,16 +121,20 @@ void saveAirport(FILE *file, const Airport *pApt) {
 }
 
 void readAirport(FILE *file, Airport *pApt) {
-    fscanf(file, "%s\n%s\n%s\n%lf %lf\n", pApt->name, pApt->country, pApt->code, &pApt->longitude, &pApt->latitude);
+    char tempName[255], countryName[255], code[4];
+    fscanf(file, "%s\n%s\n%s\n%lf %lf\n", tempName, countryName, code, &pApt->longitude, &pApt->latitude);
+    printf("%s",tempName);
     //read and allocate name
-    char *name = (char *) malloc((strlen(pApt->name) + 1) * sizeof(char));
+    char *name = (char *) malloc((strlen(tempName) + 1) * sizeof(char));
     if (!name) return;
-    strcpy(name, pApt->name);
+    strcpy(name, tempName);
     pApt->name = name;
     //read and allocate country_name
-    char *country = (char *) malloc((strlen(pApt->country) + 1) * sizeof(char));
+    char *country = (char *) malloc((strlen(countryName) + 1) * sizeof(char));
     if (!country) return;
-    strcpy(country, pApt->country);
+    strcpy(country, countryName);
     pApt->country = country;
+
+    strcpy(pApt->code, code);
 }
 

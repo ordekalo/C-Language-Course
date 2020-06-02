@@ -99,6 +99,7 @@ void readAirportManager(const char *fName, AirportManager *pAptMgr) {
     if (!file) return;
 
     fscanf(file, "%d\n", &pAptMgr->amount);
+    printf("There Are: %d Airports in File: %s\n", pAptMgr->amount, fName);
 
     pAptMgr->allAirports = (Airport *) malloc(pAptMgr->amount * sizeof(Airport));
     if (!pAptMgr->allAirports) return;

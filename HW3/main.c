@@ -15,6 +15,9 @@
 #define BINARY_SEARCH_FLIGHT 7
 #define QUIT 8
 
+#define AIRLINE_FILE "company.bin"
+#define AIRPORT_MANAGER_FILE "airport_authority.txt"
+
 int menu();
 
 
@@ -35,20 +38,21 @@ int menu() {
 }
 
 int main() {
-    Airline airline;
-    initAirline(&airline);
-
     AirportManager aptMgr;
-    initAirportManager(&aptMgr);
+    readAirportManager(AIRPORT_MANAGER_FILE, &aptMgr);
+
+    Airline airline;
+    readBinAirline(AIRLINE_FILE, &airline, &aptMgr);
+//    initAirline(&airline);
+
+    Flight *pFlt = NULL;
+    Airport airport;
+    char fromCode[100], destCode[100];
 
     int option;
     int stop = 0;
     srand((unsigned) time(NULL));
     do {
-        Flight *pFlt = NULL;
-        Airport airport;
-        char fromCode[100], destCode[100];
-
         option = menu();
         switch (option) {
             case ADD_FLIGHT:
@@ -125,6 +129,8 @@ int main() {
                 takeoff(3, airline.allFlights[0], airline.allFlights[1], airline.allFlights[2]);
 
                 printf("Bye bye\n");
+                saveAirportManager(AIRPORT_MANAGER_FILE, &aptMgr);
+                saveBinAirline(AIRLINE_FILE, &airline);
                 freeAirline(&airline);
                 freeAirportManager(&aptMgr);
                 stop = 1;

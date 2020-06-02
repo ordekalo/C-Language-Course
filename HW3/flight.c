@@ -215,8 +215,13 @@ void takeoff(int amount, ...) {
     va_list flights;
     va_start(flights, amount);
     for (int i = 0; i < amount; ++i) {
+        Flight *pFlt = va_arg(flights, Flight*);
+        if (!pFlt) {
+            va_end(flights);
+            return;
+        }
         printf("took off ");
-        printFlight(va_arg(flights, Flight*));
+        printFlight(pFlt);
     }
     va_end(flights);
 }

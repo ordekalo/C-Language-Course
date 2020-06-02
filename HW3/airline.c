@@ -45,6 +45,7 @@ void freeAirline(Airline *pAirline) {
         freeFlight(pAirline->allFlights[i]);
     }
     free(pAirline->allFlights);
+    free(pAirline->name);
 }
 
 int addFlightToAirline(Airline *pAirline, Flight *pFlt) {
@@ -88,22 +89,31 @@ void saveBinAirline(const char *fName, const Airline *pAirline) {
     fclose(file);
 }
 
-void loadBinAirline(const char *fName, Airline *pAirline, AirportManager *pAptMgr) {
+void readBinAirline(const char *fName, Airline *pAirline, AirportManager *pAptMgr) {
     FILE *file = fopen(fName, "rb");
     if (!file) return;
 
-    //fleet size write
-    fwrite(&pAirline->fleetSize, sizeof(int), 1, file);
+    printf("reading airline from: %s\n", fName);
+    //fleet size read
+    fread(&pAirline->fleetSize, sizeof(int), 1, file);
+    printf("fleet size: %d\n", pAirline->fleetSize);
     //airline name length
-    int airlineNameLen = (int) strlen(pAirline->name);
-    fwrite(&airlineNameLen, sizeof(int), 1, file);
-    //airline name write
-    fwrite(pAirline->name, sizeof(char), airlineNameLen, file);
-    //flight amount write
-    fwrite(&pAirline->flightAmount, sizeof(int), 1, file);
-    //sort type write
-    int type = pAirline->sortType;
-    fwrite(&type, sizeof(int), 1, file);
+    int airlineNameLen;
+    fread(&airlineNameLen, sizeof(int), 1, file);
+    printf("airline name length: %d\n", airlineNameLen);
+
+    //airline name read
+    pAirline->name = (char *) malloc(sizeof(char) * airlineNameLen);
+    fread(pAirline->name, sizeof(char), airlineNameLen, file);
+    printf("airline name: %s\n", pAirline->name);
+
+    //flight amount read
+    fread(&pAirline->flightAmount, sizeof(int), 1, file);
+    printf("flight amount: %d\n", pAirline->flightAmount);
+
+    //sort type read
+    fread(&pAirline->sortType, sizeof(int), 1, file);
+    printf("sorting type: %s\n", TypeString[pAirline->sortType]);
 
     pAirline->allFlights = (Flight **) malloc(sizeof(Flight *) * (pAirline->flightAmount));
     if (!pAirline->allFlights) return;

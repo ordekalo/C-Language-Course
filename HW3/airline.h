@@ -34,6 +34,6 @@ void printFlightCountInAirlineByCodes(const Airline *pAirline, const char *fromC
 
 void saveBinAirline(const char *fName, const Airline *pAirline);
 
-void loadBinAirline(const char *fName, Airline *pAirline, AirportManager *pAptMgr);
+void readBinAirline(const char *fName, Airline *pAirline, AirportManager *pAptMgr);
 
 #endif //HW2_AIRLINE_H
